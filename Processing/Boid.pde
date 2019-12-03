@@ -4,7 +4,7 @@ abstract class Boid {
   protected float vx;
   protected float vy;
   protected float v = 5;
-  protected final static float maxv = 10;
+  protected final static float maxv = 7;
   protected final static float minv = 2;
   protected float ax;
   protected float ay;
@@ -61,9 +61,51 @@ abstract class Boid {
   
   public abstract void update();
   
+  protected int sign(float f) {
+   if(f < 0) return -1;
+   return 1;
+  }
+  
+  protected void turn() {
+   float diff = nextTheta - theta;
+   if(abs(diff) > PI) diff -= sign(diff)*TWO_PI;
+   float partMaxTurn = sigmoid(a)*maxTurn;
+   if(abs(diff) > partMaxTurn) theta += sign(diff)*partMaxTurn; else theta = nextTheta;
+   if(theta < 0) theta += TWO_PI;
+   theta = theta % TWO_PI;
+  }
+  
+  protected void thrust() {
+   float diff = nextTheta - theta;
+   if(abs(diff) > PI) diff -= sign(diff)*TWO_PI;
+   diff = abs(diff);
+   boolean decelerate = false;
+   if(diff > PI/2) {
+     diff = PI - diff;
+     decelerate = true;
+   }
+   float thrust = a * cos(diff);
+   if(decelerate) thrust = -1*thrust; //-2*thrust
+   
+   v += thrust;
+   if(v < minv) v = minv;
+   if(v > maxv) v = maxv;
+   vx = v * cos(theta);
+   vy = v * sin(theta);
+  }
+  
+  private float sigmoid(float n) {
+     return 1/(1+pow((float)Math.E,-(10*n-2)));
+  }
+  
   public void display() { 
    pushMatrix();
    translate(x,y);
+   
+   //stroke(255);
+   //line(0,0, 20*cos(averageAngle), 20*sin(averageAngle));
+   //noStroke();
+   
    rotate(theta);
    
    beginShape();
