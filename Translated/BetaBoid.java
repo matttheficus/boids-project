@@ -29,7 +29,7 @@ class BetaBoid extends Boid {
       separation();
       cohesion();   
       
-      a = Math.pow(Math.pow(ax,2) + Math.pow(ay,2),2);
+      a = Math.sqrt(Math.pow(ax,2) + Math.pow(ay,2));
       if(ax != 0) nextTheta = Math.atan(ay/ax);
       if(nextTheta < 0) nextTheta += Math.PI * 2;
       if(ax < 0) nextTheta += Math.PI;
@@ -70,7 +70,7 @@ class BetaBoid extends Boid {
     if(nextTheta < 0) nextTheta += Math.PI * 2;
     if(averageX < 0) nextTheta += Math.PI;
     
-    a = Math.pow(Math.pow(averageX, 2) + Math.pow(averageY,2),2)/200;
+    a = Math.sqrt(Math.pow(averageX, 2) + Math.pow(averageY,2))/200;
     ax += a * Math.cos(nextTheta);
     ay += a * Math.sin(nextTheta);
   }
@@ -94,7 +94,7 @@ class BetaBoid extends Boid {
   }
   
   private double distance(Boid b) {
-    return Math.pow(Math.pow(b.wrapX(this),2) + Math.pow(b.wrapY(this),2),2);
+    return Math.sqrt(Math.pow(b.wrapX(this),2) + Math.pow(b.wrapY(this),2));
   }
   
   private boolean sees(Boid b) {
