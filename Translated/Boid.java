@@ -97,7 +97,7 @@ abstract class Boid {
   }
   
   private double sigmoid(double n) {
-     return 1/(1+Math.pow((double)Math.E,-(10*n-2)));
+     return 1/(1+Math.pow(Math.E,-(10*n-2)));
   }
   
   public void display() { 
