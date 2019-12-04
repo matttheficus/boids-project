@@ -15,12 +15,12 @@ class AlphaBoid extends Boid {
    if(nextTheta < 0) nextTheta += (Math.PI * 2);
    if(BoidDriver3.sketch.mouseX - x < 0) nextTheta += Math.PI;
    
-   a = Math.pow(Math.pow(BoidDriver3.sketch.mouseX - x, 2),2 ) + Math.pow(BoidDriver3.sketch.mouseY - y,2)/1000;
+   a = Math.sqrt(Math.pow(BoidDriver3.sketch.mouseX - x, 2) + Math.pow(BoidDriver3.sketch.mouseY - y,2))/1000;
    
    thrust();
    turn();
    
-   if(Math.pow(Math.pow(BoidDriver3.sketch.mouseX - x, 2),2) + Math.pow(BoidDriver3.sketch.mouseY - y,2) > v) {
+   if(Math.sqrt(Math.pow(BoidDriver3.sketch.mouseX - x, 2) + Math.pow(BoidDriver3.sketch.mouseY - y,2)) > v) {
      x += vx;
      y += vy;
    }
